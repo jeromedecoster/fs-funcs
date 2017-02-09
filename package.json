@@ -1,0 +1,15 @@
+{
+  "name": "fs-funcs",
+  "version": "0.0.0",
+  "description": "A very limited subset of fs functions I use every day",
+  "repository": "jeromedecoster/fs-funcs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Jérôme Decoster",
+    "url": "jeromedecoster.com"
+  },
+  "license": "MIT"
+}
