@@ -1,15 +1,66 @@
 {
   "name": "fs-funcs",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A very limited subset of fs functions I use every day",
   "repository": "jeromedecoster/fs-funcs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "files": [
+    "exist.js",
+    "first-bytes.js",
+    "get-filesize.js",
+    "is-bmp.js",
+    "is-directory.js",
+    "is-file.js",
+    "is-gif.js",
+    "is-image.js",
+    "is-jpg.js",
+    "is-jxr.js",
+    "is-png.js",
+    "is-symlink.js",
+    "is-webp.js",
+    "mkdir.js",
+    "read-json.js",
+    "rm.js",
+    "stat.js",
+    "write-json.js"
+  ],
+  "keywords": [
+    "fs",
+    "promise",
+    "exist",
+    "first-bytes",
+    "get-filesize",
+    "is-bmp",
+    "is-directory",
+    "is-file",
+    "is-gif",
+    "is-image",
+    "is-jpg",
+    "is-jxr",
+    "is-png",
+    "is-symlink",
+    "is-webp",
+    "mkdir",
+    "read-json",
+    "rm",
+    "stat",
+    "write-json"
+  ],
   "author": {
     "name": "Jérôme Decoster",
     "url": "jeromedecoster.com"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "jest": {
+    "testPathIgnorePatterns": ["paths"],
+    "testRegex": "tests/.*.js$"
+  },
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "devDependencies": {
+    "fs-extra": "^2.0.0",
+    "is-directory": "^0.3.1",
+    "is-file": "^1.0.0",
+    "jest": "^19.0.2"
+  }
 }
