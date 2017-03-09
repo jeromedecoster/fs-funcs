@@ -18,5 +18,7 @@ function check(buf) {
   if (buf[8] === 0x57 && buf[9] === 0x45 && buf[10] === 0x42 && buf[11] === 0x50) return 'webp'
   if (buf[0] === 0x49 && buf[1] === 0x49 && buf[2] === 0xBC) return 'jxr'
   if (buf[0] === 0x42 && buf[1] === 0x4D) return 'bmp'
+  if (buf[0] === 0x4D && buf[1] === 0x4D && buf[2] === 0x0 && buf[3] === 0x2A) return 'tif' // big endian
+  if (buf[0] === 0x49 && buf[1] === 0x49 && buf[2] === 0x2A && buf[3] === 0x0) return 'tif' // little endian
   return null
 }

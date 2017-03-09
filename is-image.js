@@ -7,5 +7,7 @@ module.exports = (path) => {
       || result === 'gif'
       || result === 'webp'
       || result === 'jxr'
+      || result === 'bmp'
+      || result === 'tif'
   })
 }

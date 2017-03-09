@@ -1,5 +1,5 @@
 const paths = require('./paths')
-const fn = require('../is-gif')
+const fn = require('../is-tif')
 
 
 beforeAll(() => {
@@ -54,7 +54,7 @@ test('the path target a bmp', async () => {
 })
 
 test('the path target a gif', async () => {
-  expect(await fn(paths.fixtures.gif)).toBe(true)
+  expect(await fn(paths.fixtures.gif)).toBe(false)
 })
 
 test('the path target a jpg', async () => {
@@ -70,11 +70,11 @@ test('the path target a png', async () => {
 })
 
 test('the path target a big endian tif', async () => {
-  expect(await fn(paths.fixtures.tif.be)).toBe(false)
+  expect(await fn(paths.fixtures.tif.be)).toBe(true)
 })
 
 test('the path target a little endian tif', async () => {
-  expect(await fn(paths.fixtures.tif.le)).toBe(false)
+  expect(await fn(paths.fixtures.tif.le)).toBe(true)
 })
 
 test('the path target a webp', async () => {
