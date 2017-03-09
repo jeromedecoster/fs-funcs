@@ -59,9 +59,7 @@ test('the path target a directory not accessible', async () => {
     await fn(paths.permissions.user.execute + '/a')
     expect('this must').toBe('be ignored')
   } catch(err) {
-    expect(err instanceof TypeError).toBe(false)
-    expect(err instanceof Error).toBe(true)
-    expect(err.message).toBe('"path" argument is not accessible, permission denied')
+    expect(err.message.includes('permission denied')).toBe(true)
     expect(err.code).toBe('EACCES')
     expect(err.path).toBe(paths.permissions.user.execute + '/a')
   }
@@ -72,9 +70,7 @@ test('the path target a directory with action not permitted', async () => {
     await fn('/tmp')
     expect('this must').toBe('be ignored')
   } catch(err) {
-    expect(err instanceof TypeError).toBe(false)
-    expect(err instanceof Error).toBe(true)
-    expect(err.message).toBe('"path" argument is inappropriate, operation not permitted')
+    expect(err.message.includes('operation not permitted')).toBe(true)
     expect(err.code).toBe('EPERM')
     expect(err.path).toBe('/tmp')
   }

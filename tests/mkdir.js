@@ -41,7 +41,7 @@ test('the path target a file', async () => {
     await fn(paths.permissions.user.write + '/fixture/a')
     expect('this must').toBe('be ignored')
   } catch(err) {
-    expect(err.message).toBe('"path" argument must be a directory')
+    expect(err.message.includes('not a directory')).toBe(true)
     expect(err.code).toBe('ENOTDIR')
     expect(err.path).toBe(paths.permissions.user.write + '/fixture/a')
   }
@@ -52,21 +52,17 @@ test('the path target a directory not accessible', async () => {
     await fn(paths.permissions.user.execute + '/a')
     expect('this must').toBe('be ignored')
   } catch(err) {
-    expect(err.message).toBe('"path" argument is not accessible, permission denied')
+    expect(err.message.includes('permission denied')).toBe(true)
     expect(err.code).toBe('EACCES')
     expect(err.path).toBe(paths.permissions.user.execute + '/a')
   }
 })
 
-test('the path target a directory with action not permitted', async () => {
-  try {
-    await fn('/tmp')
-    expect('this must').toBe('be ignored')
-  } catch(err) {
-    expect(err.message).toBe('"path" argument is inappropriate, operation not permitted')
-    expect(err.code).toBe('EPERM')
-    expect(err.path).toBe('/tmp')
-  }
+test('the path target an already existing directory', async () => {
+  var path = '/tmp'
+  expect(await fn(path)).toBe(path)
+  expect(await fn(path, true)).toBe('/')
+  expect(isdirectory(path)).toBe(true)
 })
 
 test('create a directory with pop', async () => {
@@ -98,4 +94,11 @@ test('create a directory with invalid length', async () => {
   } catch(err) {
     expect(err.message).toBe('"path" argument must have a length > 0')
   }
+})
+
+test('create a long directory', async () => {
+  var path = paths.tmp.directory + '/ab/cd/ef/gh/ij/kl'
+  var result = await fn(path)
+  expect(result).toBe(path)
+  expect(isdirectory(path)).toBe(true)
 })

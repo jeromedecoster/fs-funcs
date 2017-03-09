@@ -339,8 +339,6 @@ Recursively mkdir
 | **path** | the created `path` |
 | **pop** | optional `pop`, default to `false`. If `true`, remove the last part of the `path` |
 
-Unix command only, use `mkdir -p` internally
-
 ```js
 const mkdir = require('fs-funcs/mkdir')
 
@@ -379,8 +377,6 @@ Remove a path
 | Argument | Action |
 | :------ | :------- |
 | **path** | the removed `path` |
-
-Unix command only, use `rm -fr` internally
 
 ```js
 const rm = require('fs-funcs/rm')

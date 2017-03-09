@@ -1,4 +1,3 @@
-const cp = require('child_process')
 const path = require('path')
 const fs = require('fs')
 
@@ -16,36 +15,41 @@ module.exports = (p, pop) => {
       if (pop === true) p = path.dirname(p)
     } catch (err) { return reject(err) }
 
-    cp.exec(`mkdir -m 755 -p "${p}"`, err1 => {
-      if (err1) {
-        var msg = err1.message.trim().toLowerCase()
-        // https://nodejs.org/dist/latest-v7.x/docs/api/errors.html#errors_common_system_errors
-        if (msg.endsWith('not a directory')) {
-          return reject(error('"path" argument must be a directory', 'ENOTDIR', p))
-        }
-        if (msg.endsWith('permission denied')) {
-          return reject(error('"path" argument is not accessible, permission denied', 'EACCES', p))
-        }
-        if (msg.endsWith('operation not permitted')) {
-          return reject(error('"path" argument is inappropriate, operation not permitted', 'EPERM', p))
-        }
-        return reject(err1)
-      }
-      // one more check
-      fs.stat(p, (err2, stats) => {
-        if (err2) return reject(err2)
-        if (stats.isDirectory() === false) {
-          return reject(error('the directory creation has failed', 'ENOTDIR', p))
-        }
-        resolve(p)
-      })
+    mkdirs(p, (err) => {
+      if (err) return reject(err)
+      resolve(p)
     })
   })
 }
 
-function error(msg, code, path) {
-  var err = new Error(msg)
-  err.code = code
-  err.path = path
-  return err
+// adapted from https://github.com/jprichardson/node-fs-extra/blob/master/lib/mkdirs/mkdirs.js
+function mkdirs(p, cb, made) {
+  // 493 means chmod 755
+  fs.mkdir(p, 493, err1 => {
+    if (!err1) {
+      made = made || p
+      return cb(null, made)
+    }
+    switch (err1.code) {
+      case 'ENOENT':
+        if (path.dirname(p) === p) return cb(err1)
+        mkdirs(path.dirname(p), (err2, made) => {
+          if (err2) cb(err2, made)
+          else mkdirs(p, cb, made)
+        })
+        break
+
+      // In the case of any other error, just see if there's a dir
+      // there already.  If so, then hooray!  If not, then something
+      // is borked.
+      default:
+        fs.stat(p, (err3, stats) => {
+          // if the stat fails, then that's super weird.
+          // let the original error be the failure reason.
+          if (err3 || !stats.isDirectory()) cb(err1, made)
+          else cb(null, made)
+        })
+        break
+    }
+  })
 }
