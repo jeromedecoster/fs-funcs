@@ -25,6 +25,7 @@ Package [on npm](https://www.npmjs.com/package/fs-funcs)
 * [is-jxr](#is-jxrpath)
 * [is-png](#is-pngpath)
 * [is-symlink](#is-symlinkpath-nothrow)
+* [is-tif](#is-tifpath)
 * [is-webp](#is-webppath)
 * [mkdir](#mkdirpath-pop)
 * [read-json](#read-jsonpath)
@@ -99,6 +100,7 @@ The recognized types are
 * jpg
 * jxr
 * png
+* tif
 * webp
 
 ```js
@@ -222,6 +224,7 @@ The recognized types are
 * jpg
 * jxr
 * png
+* tif
 * webp
 
 ```js
@@ -309,6 +312,23 @@ issymlink('/path/to/file').then(result => {
 
 issymlink('/path/to/file', true).then(result => {
   // false
+  console.log(result)
+})
+```
+
+#### is-tif(path)
+
+Check if `path` is a tif
+
+| Argument | Action |
+| :------ | :------- |
+| **path** | the tested `path` |
+
+```js
+const istif = require('fs-funcs/is-tif')
+
+istif('/path/to/tif').then(result => {
+  // true
   console.log(result)
 })
 ```
@@ -407,6 +427,9 @@ stat('/path/to/file').then(result => {
     file: true,
     directory: false,
     symlink: false,
+    path: '/path/to/file',
+    dirname: '/path/to',
+    basename: 'file',
     size: 123,
     readable: true,
     writable: true,
@@ -422,6 +445,9 @@ stat('/path/to/directory').then(result => {
     file: false,
     directory: true,
     symlink: false,
+    path: '/path/to/directory',
+    dirname: '/path/to',
+    basename: 'directory',
     size: 7,
     readable: true,
     writable: true,
