@@ -13,8 +13,6 @@ const FIXTURE_GIF = fixtures('fixture.gif')
 const FIXTURE_JXR = fixtures('fixture.jxr')
 const FIXTURE_JPG = fixtures('fixture.jpg')
 const FIXTURE_PNG = fixtures('fixture.png')
-const FIXTURE_TIF_BE = fixtures('fixture-big-endian.tif')
-const FIXTURE_TIF_LE = fixtures('fixture-little-endian.tif')
 const FIXTURE_WEBP = fixtures('fixture.webp')
 const FIXTURE_JSON = fixtures('fixture.json')
 const INVALIDS_JSON = fixtures('invalids/invalid.json')
@@ -25,6 +23,7 @@ const USER_EXECUTE = '/tmp/permissions/no-user-execute'
 const USER_READ = '/tmp/permissions/no-user-read'
 const USER_WRITE = '/tmp/permissions/no-user-write'
 const TMP_DIRECTORY = '/tmp/directory'
+const PROG = fixtures('prog.sh')
 
 function create () {
   fs.ensureDirSync(USER_EXECUTE)
@@ -58,10 +57,6 @@ module.exports = {
     jpg:  FIXTURE_JPG,
     jxr:  FIXTURE_JXR,
     png:  FIXTURE_PNG,
-    tif: {
-      be: FIXTURE_TIF_BE,
-      le: FIXTURE_TIF_LE
-    },
     webp: FIXTURE_WEBP,
     json: FIXTURE_JSON,
   },
@@ -82,5 +77,6 @@ module.exports = {
   },
   tmp: {
     directory: TMP_DIRECTORY
-  }
+  },
+  prog: PROG
 }

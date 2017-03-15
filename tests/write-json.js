@@ -1,6 +1,7 @@
 const read = require('fs-extra').readJsonSync
 const fn = require('../write-json')
 const paths = require('./paths')
+const fs = require('fs')
 
 
 beforeAll(() => {
@@ -42,6 +43,10 @@ test('write a json file with a data object', async () => {
   var result = await fn(path, {a:2, b:'c'})
   expect(result).toMatchObject({a:2, b:'c'})
   expect(read(path)).toMatchObject({a:2, b:'c'})
+  expect(fs.readFileSync(path, 'utf-8')).toBe(`{
+  "a": 2,
+  "b": "c"
+}`)
 })
 
 test('write a json file with a data string', async () => {
@@ -49,4 +54,21 @@ test('write a json file with a data string', async () => {
   var result = await fn(path, 'abc')
   expect(result).toBe('abc')
   expect(read(path)).toBe('abc')
+  expect(fs.readFileSync(path, 'utf-8')).toBe('"abc"')
+})
+
+test('write a json file with a data object and minify = true', async () => {
+  var path = paths.tmp.directory + '/file/with/object'
+  var result = await fn(path, {a:2, b:'c'}, true)
+  expect(result).toMatchObject({a:2, b:'c'})
+  expect(read(path)).toMatchObject({a:2, b:'c'})
+  expect(fs.readFileSync(path, 'utf-8')).toBe('{"a":2,"b":"c"}')
+})
+
+test('write a json file with a data string and minify = true', async () => {
+  var path = paths.tmp.directory + '/file/with/string'
+  var result = await fn(path, 'abc', true)
+  expect(result).toBe('abc')
+  expect(read(path)).toBe('abc')
+  expect(fs.readFileSync(path, 'utf-8')).toBe('"abc"')
 })

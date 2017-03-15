@@ -69,14 +69,6 @@ test('the path target a png', async () => {
   expect(await fn(paths.fixtures.png)).toBe(false)
 })
 
-test('the path target a big endian tif', async () => {
-  expect(await fn(paths.fixtures.tif.be)).toBe(false)
-})
-
-test('the path target a little endian tif', async () => {
-  expect(await fn(paths.fixtures.tif.le)).toBe(false)
-})
-
 test('the path target a webp', async () => {
   expect(await fn(paths.fixtures.webp)).toBe(false)
 })

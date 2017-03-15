@@ -2,7 +2,7 @@ const mkdir = require('./mkdir')
 const path = require('path')
 const fs = require('fs')
 
-module.exports = (p, data) => {
+module.exports = (p, data, minify) => {
   return new Promise((resolve, reject) => {
     if (typeof p !== 'string') {
       return reject(new TypeError('"path" argument must be a string'))
@@ -12,7 +12,9 @@ module.exports = (p, data) => {
     }
 
     mkdir(p, true).then(() => {
-      var str = JSON.stringify(data, null, 2)
+      var str = minify === true
+        ? JSON.stringify(data)
+        : JSON.stringify(data, null, 2)
       fs.writeFile(p, str, (err) => {
         if (err) return reject(`saveJSON error: ${err}`)
         resolve(data)

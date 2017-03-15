@@ -8,6 +8,5 @@ module.exports = (path) => {
       || result === 'webp'
       || result === 'jxr'
       || result === 'bmp'
-      || result === 'tif'
   })
 }

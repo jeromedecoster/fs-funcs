@@ -12,6 +12,8 @@ Package [on npm](https://www.npmjs.com/package/fs-funcs)
 
 ## API
 
+* [exec-file](#exec-filefile-args-options)
+* [exec](#execcommand-options)
 * [exist](#existpath-nofollow)
 * [first-bytes](#first-bytespath-length)
 * [get-filesize](#get-filesizepath)
@@ -25,13 +27,68 @@ Package [on npm](https://www.npmjs.com/package/fs-funcs)
 * [is-jxr](#is-jxrpath)
 * [is-png](#is-pngpath)
 * [is-symlink](#is-symlinkpath-nothrow)
-* [is-tif](#is-tifpath)
 * [is-webp](#is-webppath)
 * [mkdir](#mkdirpath-pop)
 * [read-json](#read-jsonpath)
 * [rm](#rmpath)
 * [stat](#statpath-nofollow)
-* [write-json](#write-jsonpath-data)
+* [write-json](#write-jsonpath-data-minify)
+
+#### exec-file(file, [args], [options])
+
+Execute the `file`
+
+| Argument | Action |
+| :------ | :------- |
+| **file** | the executed `file` |
+| **args** | the list of string arguments |
+| **options** | optional `options`, default to `{ maxBuffer: 20971520 }` |
+
+`args` can be an `Array` or a `String`
+
+The default `maxBuffer` is 20 Mo instead of 200 ko
+
+`result` is an object with two properties `{ stdout, stderr }`
+
+The EOF chars `\n` or `\r\n` are removed from the returned strings `stdout` and `stderr`
+
+```js
+const execfile = require('fs-funcs/execFile')
+
+execfile('echo', ['one', 'two']).then(result => {
+  // one two
+  console.log(result.stdout)
+})
+
+execfile('echo', 'abc def').then(result => {
+  // abc def
+  console.log(result.stdout)
+})
+```
+
+#### exec(command, [options])
+
+Execute the `command`
+
+| Argument | Action |
+| :------ | :------- |
+| **command** | the executed `command` |
+| **options** | optional `options`, default to `{ maxBuffer: 20971520 }` |
+
+The default `maxBuffer` is 20 Mo instead of 200 ko
+
+`result` is an object with two properties `{ stdout, stderr }`
+
+The EOF chars `\n` or `\r\n` are removed from the returned strings `stdout` and `stderr`
+
+```js
+const exec = require('fs-funcs/exec')
+
+exec('echo one two').then(result => {
+  // one two
+  console.log(result.stdout)
+})
+```
 
 #### exist(path, [nofollow])
 
@@ -100,7 +157,6 @@ The recognized types are
 * jpg
 * jxr
 * png
-* tif
 * webp
 
 ```js
@@ -151,8 +207,9 @@ isdirectory('/path/to/directory').then(result => {
   console.log(result)
 })
 
-isdirectory('/path/to/file').then(result => {
-}).catch(err => {
+isdirectory('/path/to/file')
+.then(result => {})
+.catch(err => {
   // "path" argument must target a directory
   console.log(err.message)
 })
@@ -181,8 +238,9 @@ isfile('/path/to/file').then(result => {
   console.log(result)
 })
 
-isfile('/path/to/directory').then(result => {
-}).catch(err => {
+isfile('/path/to/directory')
+.then(result => {})
+.catch(err => {
   // "path" argument must target a file
   console.log(err.message)
 })
@@ -224,7 +282,6 @@ The recognized types are
 * jpg
 * jxr
 * png
-* tif
 * webp
 
 ```js
@@ -304,31 +361,14 @@ issymlink('/path/to/symlink').then(result => {
   console.log(result)
 })
 
-issymlink('/path/to/file').then(result => {
-}).catch(err => {
+issymlink('/path/to/file')
+.then(result => {}).catch(err => {
   // "path" argument must target a symlink
   console.log(err.message)
 })
 
 issymlink('/path/to/file', true).then(result => {
   // false
-  console.log(result)
-})
-```
-
-#### is-tif(path)
-
-Check if `path` is a tif
-
-| Argument | Action |
-| :------ | :------- |
-| **path** | the tested `path` |
-
-```js
-const istif = require('fs-funcs/is-tif')
-
-istif('/path/to/tif').then(result => {
-  // true
   console.log(result)
 })
 ```
@@ -458,7 +498,7 @@ stat('/path/to/directory').then(result => {
 })
 ```
 
-#### write-json(path, data)
+#### write-json(path, data, [minify])
 
 Write a prettified JSON file. The directory tree is created if needed
 
@@ -466,6 +506,7 @@ Write a prettified JSON file. The directory tree is created if needed
 | :------ | :------- |
 | **path** | the created `path` |
 | **data** | the stringified `data` |
+| **minify** | optional `minify`, default to `false`. If `true`, the JSON will not be beautified |
 
 ```js
 const writejson = require('fs-funcs/write-json')
