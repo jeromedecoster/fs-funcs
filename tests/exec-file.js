@@ -1,5 +1,5 @@
-const paths = require('./paths')
 const fn = require('../exec-file')
+const paths = require('./paths')
 const path = require('path')
 
 

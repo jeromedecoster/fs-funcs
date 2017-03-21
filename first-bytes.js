@@ -19,9 +19,9 @@ module.exports = (path, length) => {
         fs.read(fd, buf, 0, length, 0, (err) => {
           if (err) return reject(err)
           fs.close(fd, (err) => {
-            if (err) return reject(err)
-
-            resolve(buf)
+            return err !== null
+              ? reject(err)
+              : resolve(buf)
           })
         })
       })

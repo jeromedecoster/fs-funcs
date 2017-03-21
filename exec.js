@@ -5,7 +5,7 @@ const cp = require('child_process')
 // new default = 20971520 bytes = 20 Mo
 const MAX = 20971520
 
-function execFile(command, options) {
+function exec(command, options) {
   // prepare default arguments
   if (arguments.length < 2) {
     options = { maxBuffer: MAX }
@@ -62,4 +62,4 @@ function stripeof(data) {
   return data
 }
 
-module.exports = execFile
+module.exports = exec

@@ -1,4 +1,3 @@
-const file = require('./is-file')
 const path = require('path')
 const fs = require('fs')
 
@@ -45,8 +44,9 @@ module.exports = (p, nofollow) => {
 function lstat(p) {
   return new Promise((resolve, reject) => {
     fs.lstat(p, (err, stats) => {
-      if (err) return reject(err)
-      resolve(stats)
+      return err !== null
+        ? reject(err)
+        : resolve(stats)
     })
   })
 }
@@ -54,8 +54,9 @@ function lstat(p) {
 function stat(p) {
   return new Promise((resolve, reject) => {
     fs.stat(p, (err, stats) => {
-      if (err) return reject(err)
-      resolve(stats)
+      return err !== null
+        ? reject(err)
+        : resolve(stats)
     })
   })
 }
@@ -65,8 +66,9 @@ function parse(p, follow) {
   return new Promise((resolve, reject) => {
     if (follow === true) {
       fs.readlink(p, (err, target) => {
-        if (err) return reject(err)
-        resolve(path.parse(path.resolve(p, target)))
+        return err !== null
+          ? reject(err)
+          : resolve(path.parse(path.resolve(p, target)))
       })
     } else {
       resolve(path.parse(p))

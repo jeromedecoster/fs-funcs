@@ -1,23 +1,24 @@
 const mkdir = require('./mkdir')
-const path = require('path')
 const fs = require('fs')
 
-module.exports = (p, data, minify) => {
+module.exports = (path, data, minify) => {
   return new Promise((resolve, reject) => {
-    if (typeof p !== 'string') {
+    if (typeof path !== 'string') {
       return reject(new TypeError('"path" argument must be a string'))
     }
     if (data === undefined) {
       return reject(new TypeError('"data" argument is required'))
     }
 
-    mkdir(p, true).then(() => {
+    mkdir(path, true).then(() => {
       var str = minify === true
         ? JSON.stringify(data)
         : JSON.stringify(data, null, 2)
-      fs.writeFile(p, str, (err) => {
-        if (err) return reject(`saveJSON error: ${err}`)
-        resolve(data)
+
+      fs.writeFile(path, str, (err) => {
+        return err !== null
+          ? reject(`saveJSON error: ${err}`)
+          : resolve(data)
       })
     })
   })

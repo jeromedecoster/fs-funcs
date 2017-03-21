@@ -17,17 +17,9 @@ Package [on npm](https://www.npmjs.com/package/fs-funcs)
 * [exist](#existpath-nofollow)
 * [first-bytes](#first-bytespath-length)
 * [get-filesize](#get-filesizepath)
-* [image-type](#image-typepath)
-* [is-bmp](#is-bmppath)
 * [is-directory](#is-directorypath-nothrow)
 * [is-file](#is-filepath-nothrow)
-* [is-gif](#is-gifpath)
-* [is-image](#is-imagepath)
-* [is-jpg](#is-jpgpath)
-* [is-jxr](#is-jxrpath)
-* [is-png](#is-pngpath)
 * [is-symlink](#is-symlinkpath-nothrow)
-* [is-webp](#is-webppath)
 * [mkdir](#mkdirpath-pop)
 * [read-json](#read-jsonpath)
 * [rm](#rmpath)
@@ -53,7 +45,7 @@ The default `maxBuffer` is 20 Mo instead of 200 ko
 The EOF chars `\n` or `\r\n` are removed from the returned strings `stdout` and `stderr`
 
 ```js
-const execfile = require('fs-funcs/execFile')
+const execfile = require('fs-funcs/exec-file')
 
 execfile('echo', ['one', 'two']).then(result => {
   // one two
@@ -65,6 +57,8 @@ execfile('echo', 'abc def').then(result => {
   console.log(result.stdout)
 })
 ```
+
+---
 
 #### exec(command, [options])
 
@@ -90,6 +84,8 @@ exec('echo one two').then(result => {
 })
 ```
 
+---
+
 #### exist(path, [nofollow])
 
 Check if `path` exists
@@ -107,6 +103,8 @@ exist(__filename).then(result => {
   console.log(result)
 })
 ```
+
+---
 
 #### first-bytes(path, [length])
 
@@ -126,6 +124,8 @@ firstbytes('/path/to/file').then(result => {
 })
 ```
 
+---
+
 #### get-filesize(path)
 
 Get the size of a file
@@ -143,52 +143,7 @@ getfilesize('/path/to/file').then(result => {
 })
 ```
 
-#### image-type(path)
-
-Get the type of an image by reading his header
-
-| Argument | Action |
-| :------ | :------- |
-| **path** | the file `path` |
-
-The recognized types are
-* bmp
-* gif
-* jpg
-* jxr
-* png
-* webp
-
-```js
-const imagetype = require('fs-funcs/image-type')
-
-imagetype('/path/to/png').then(result => {
-  // png
-  console.log(result)
-})
-
-imagetype('/path/to/psd').then(result => {
-  // null
-  console.log(result)
-})
-```
-
-#### is-bmp(path)
-
-Check if a file is a bmp
-
-| Argument | Action |
-| :------ | :------- |
-| **path** | the tested `path` |
-
-```js
-const isbmp = require('fs-funcs/is-bmp')
-
-isbmp('/path/to/bmp').then(result => {
-  // true
-  console.log(result)
-})
-```
+---
 
 #### is-directory(path, [nothrow])
 
@@ -219,6 +174,8 @@ isdirectory('/path/to/file', true).then(result => {
   console.log(result)
 })
 ```
+
+---
 
 #### is-file(path, [nothrow])
 
@@ -251,98 +208,7 @@ isfile('/path/to/directory', true).then(result => {
 })
 ```
 
-#### is-gif(path)
-
-Check if `path` is a gif
-
-| Argument | Action |
-| :------ | :------- |
-| **path** | the tested `path` |
-
-```js
-const isgif = require('fs-funcs/is-gif')
-
-isgif('/path/to/gif').then(result => {
-  // true
-  console.log(result)
-})
-```
-
-#### is-image(path)
-
-Check if `path` is an image
-
-| Argument | Action |
-| :------ | :------- |
-| **path** | the tested `path` |
-
-The recognized types are
-* bmp
-* gif
-* jpg
-* jxr
-* png
-* webp
-
-```js
-const isimage = require('fs-funcs/is-image')
-
-isimage('/path/to/image').then(result => {
-  // true
-  console.log(result)
-})
-```
-
-#### is-jpg(path)
-
-Check if `path` is a jpg
-
-| Argument | Action |
-| :------ | :------- |
-| **path** | the tested `path` |
-
-```js
-const isjpg = require('fs-funcs/is-jpg')
-
-isjpg('/path/to/jpg').then(result => {
-  // true
-  console.log(result)
-})
-```
-
-#### is-jxr(path)
-
-Check if `path` is a jxr
-
-| Argument | Action |
-| :------ | :------- |
-| **path** | the tested `path` |
-
-```js
-const isjxr = require('fs-funcs/is-jxr')
-
-isjxr('/path/to/jxr').then(result => {
-  // true
-  console.log(result)
-})
-```
-
-#### is-png(path)
-
-Check if `path` is a png
-
-| Argument | Action |
-| :------ | :------- |
-| **path** | the tested `path` |
-
-```js
-const ispng = require('fs-funcs/is-png')
-
-ispng('/path/to/png').then(result => {
-  // true
-  console.log(result)
-})
-```
+---
 
 #### is-symlink(path, [nothrow])
 
@@ -373,22 +239,7 @@ issymlink('/path/to/file', true).then(result => {
 })
 ```
 
-#### is-webp(path)
-
-Check if `path` is a webp
-
-| Argument | Action |
-| :------ | :------- |
-| **path** | the tested `path` |
-
-```js
-const iswebp = require('fs-funcs/is-webp')
-
-iswebp('/path/to/webp').then(result => {
-  // true
-  console.log(result)
-})
-```
+---
 
 #### mkdir(path, [pop])
 
@@ -413,6 +264,8 @@ mkdir('/path/to/file', true).then(result => {
 })
 ```
 
+---
+
 #### read-json(path)
 
 Read and serialize a JSON file
@@ -430,6 +283,8 @@ readjson('/path/to/json').then(result => {
 })
 ```
 
+---
+
 #### rm(path)
 
 Remove a path
@@ -446,6 +301,8 @@ rm('/path/to/directory').then(result => {
   console.log(result)
 })
 ```
+
+---
 
 #### stat(path, [nofollow])
 
@@ -497,6 +354,8 @@ stat('/path/to/directory').then(result => {
   console.log(result)
 })
 ```
+
+---
 
 #### write-json(path, data, [minify])
 

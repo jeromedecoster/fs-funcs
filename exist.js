@@ -1,5 +1,4 @@
 const stat = require('./stat')
-const fs = require('fs')
 
 module.exports = (path, nofollow) => {
   return new Promise((resolve, reject) => {
@@ -8,8 +7,9 @@ module.exports = (path, nofollow) => {
       resolve(true)
     })
     .catch(err => {
-      if (err.code === 'ENOENT') return resolve(false)
-      reject(err)
+      return err.code === 'ENOENT'
+        ? resolve(false)
+        : reject(err)
     })
   })
 }

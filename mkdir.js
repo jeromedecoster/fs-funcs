@@ -1,24 +1,24 @@
 const mkdirp = require('mkdirp')
-const path = require('path')
-const fs = require('fs')
+const _path_ = require('path')
 
-module.exports = (p, pop) => {
+module.exports = (path, pop) => {
   return new Promise((resolve, reject) => {
-    if (typeof p !== 'string') {
+    if (typeof path !== 'string') {
       return reject(new TypeError('"path" argument must be a string'))
     }
-    if (p.length === 0) {
+    if (path.length === 0) {
       return reject(new TypeError('"path" argument must have a length > 0'))
     }
 
     try {
-      p = path.resolve(p)
-      if (pop === true) p = path.dirname(p)
+      path = _path_.resolve(path)
+      if (pop === true) path = _path_.dirname(path)
     } catch (err) { return reject(err) }
 
-    mkdirp(p, (err) => {
-      if (err) return reject(err)
-      resolve(p)
+    mkdirp(path, (err) => {
+      return err !== null
+        ? reject(err)
+        : resolve(path)
     })
   })
 }
