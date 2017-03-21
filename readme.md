@@ -26,7 +26,9 @@ Package [on npm](https://www.npmjs.com/package/fs-funcs)
 * [stat](#statpath-nofollow)
 * [write-json](#write-jsonpath-data-minify)
 
-#### exec-file(file, [args], [options])
+---
+
+### exec-file(file, [args], [options])
 
 Execute the `file`
 
@@ -60,7 +62,7 @@ execfile('echo', 'abc def').then(result => {
 
 ---
 
-#### exec(command, [options])
+### exec(command, [options])
 
 Execute the `command`
 
@@ -86,7 +88,7 @@ exec('echo one two').then(result => {
 
 ---
 
-#### exist(path, [nofollow])
+### exist(path, [nofollow])
 
 Check if `path` exists
 
@@ -106,7 +108,7 @@ exist(__filename).then(result => {
 
 ---
 
-#### first-bytes(path, [length])
+### first-bytes(path, [length])
 
 Get a Buffer with the first bytes of a file
 
@@ -126,7 +128,7 @@ firstbytes('/path/to/file').then(result => {
 
 ---
 
-#### get-filesize(path)
+### get-filesize(path)
 
 Get the size of a file
 
@@ -145,7 +147,7 @@ getfilesize('/path/to/file').then(result => {
 
 ---
 
-#### is-directory(path, [nothrow])
+### is-directory(path, [nothrow])
 
 Check if `path` is a directory
 
@@ -177,7 +179,7 @@ isdirectory('/path/to/file', true).then(result => {
 
 ---
 
-#### is-file(path, [nothrow])
+### is-file(path, [nothrow])
 
 Check if `path` is a file
 
@@ -210,7 +212,7 @@ isfile('/path/to/directory', true).then(result => {
 
 ---
 
-#### is-symlink(path, [nothrow])
+### is-symlink(path, [nothrow])
 
 Check if `path` is a symlink
 
@@ -241,7 +243,7 @@ issymlink('/path/to/file', true).then(result => {
 
 ---
 
-#### mkdir(path, [pop])
+### mkdir(path, [pop])
 
 Recursively mkdir
 
@@ -266,7 +268,7 @@ mkdir('/path/to/file', true).then(result => {
 
 ---
 
-#### read-json(path)
+### read-json(path)
 
 Read and serialize a JSON file
 
@@ -285,7 +287,7 @@ readjson('/path/to/json').then(result => {
 
 ---
 
-#### rm(path)
+### rm(path)
 
 Remove a path
 
@@ -304,7 +306,7 @@ rm('/path/to/directory').then(result => {
 
 ---
 
-#### stat(path, [nofollow])
+### stat(path, [nofollow])
 
 Get some data about `path`
 
@@ -357,7 +359,7 @@ stat('/path/to/directory').then(result => {
 
 ---
 
-#### write-json(path, data, [minify])
+### write-json(path, data, [minify])
 
 Write a prettified JSON file. The directory tree is created if needed
 
